@@ -1,5 +1,16 @@
 # Build plan
 
+## Phase 0: Setup
+
+- Create `src/commands/` folder with all command files
+- Create `src/commands.rs` and declare all submodules
+- Stub each command with `pub fn run(args: &[String])` that `todo!()`s
+- Wire `main.rs` to dispatch on `args[1]` to each command's `run()`
+- `cargo build` passes with no errors
+- Smoke test: `cargo run -- create` routes to the right stub
+
+## Phase 1: Features
+
 Features to implement, by order:
 
 - `crux create`: scaffold folders and blank files
