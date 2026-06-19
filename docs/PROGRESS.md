@@ -1,6 +1,15 @@
 # Progress
 
-## v1
+## Phase 0: Setup
+
+- [x] Create `src/commands/` with all command files
+- [x] Create `src/commands.rs` and declare all submodules
+- [ ] Stub each command with `pub fn run(args: &[String])`
+- [ ] Wire `main.rs` dispatcher
+- [ ] `cargo build` passes
+- [ ] Smoke test routing
+
+## Phase 1: v1
 
 - [ ] `crux create`: scaffold folders and blank files
 - [ ] `crux create`: write `main.cpp` boilerplate (`#include <bits/stdc++.h>`, empty `main()`)
