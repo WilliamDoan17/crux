@@ -22,7 +22,7 @@ two-sum/
 
 ## `crux add-test <name|path>`
 
-Interactively adds a new test case.
+Interactively adds a new test case to crux workspace name|path specified.
 
 - Prompts for input, then expected output (optional)
 - input and output uses `$EDITOR`, with a fallback to nano to write
