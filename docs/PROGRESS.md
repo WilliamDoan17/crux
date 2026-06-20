@@ -4,10 +4,10 @@
 
 - [x] Create `src/commands/` with all command files
 - [x] Create `src/commands.rs` and declare all submodules
-- [ ] Stub each command with `pub fn run(args: &[String])`
-- [ ] Wire `main.rs` dispatcher
-- [ ] `cargo build` passes
-- [ ] Smoke test routing
+- [x] Stub each command with `pub fn run(args: &[String])`
+- [x] Wire `main.rs` dispatcher
+- [x] `cargo build` passes
+- [x] Smoke test routing
 
 ## Phase 1: v1
 
