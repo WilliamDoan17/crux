@@ -11,8 +11,8 @@
 
 ## Phase 1: v1
 
-- [ ] `crux create`: scaffold folders and blank files
-- [ ] `crux create`: write `main.cpp` boilerplate (`#include <bits/stdc++.h>`, empty `main()`)
+- [x] `crux create`: scaffold folders and blank files
+- [x] `crux create`: write `main.cpp` boilerplate (`#include <bits/stdc++.h>`, empty `main()`)
 - [ ] `crux add-test`: open `$EDITOR` (fallback to nano) for input, then expected output
 - [ ] `crux remove-test`: delete `tests/N.in`, `expected_results/N.out`, `test_results/N.out`
 - [ ] `crux run`: compile `main.cpp` into `bin/solution` once
