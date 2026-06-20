@@ -54,9 +54,9 @@ fn has_error(destination_path: &PathBuf) -> bool {
     return false
 }
 
-fn create_crux_workspace(input: &String) {
+fn create_crux_workspace(input: &str) {
     let destination_path: PathBuf = PathBuf::from(input);
-    if has_error(&destination_path) { return }
+    if has_error(&destination_path) { std::process::exit(1) }
     
     println!("Ready to create crux workspace {input}");
 }
