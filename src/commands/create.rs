@@ -1,5 +1,9 @@
 use std::fs;
+use std::fs::File;
 use std::path::{Path, PathBuf};
+use std::io::Error;
+use std::io::Write;
+use std::process::exit;
 
 pub fn run(args: &[String]) {
     match args {
@@ -8,7 +12,7 @@ pub fn run(args: &[String]) {
         },
         _ => {
             eprintln!("Usage: crux create <name|path>");
-            std::process::exit(1);
+            exit(1);
         }
     };
 }
@@ -54,9 +58,58 @@ fn has_error(destination_path: &PathBuf) -> bool {
     return false
 }
 
-fn create_crux_workspace(input: &str) {
-    let destination_path: PathBuf = PathBuf::from(input);
-    if has_error(&destination_path) { std::process::exit(1) }
-    
-    println!("Ready to create crux workspace {input}");
+fn create_dir(path: &Path) {  
+    // creates directory at path
+    // if encounters error, log and exit the process (stop the CLI immediately)
+
+    if let Err(e) = fs::create_dir(&path) {
+        eprintln!("Failed to create directory {:?}: {e}", path);
+        exit(1);
+    } 
 }
+
+fn create_file(path: &Path) { 
+    // creates file at path
+    // if encounters error, log and exit the process (stop the CLI immediately)
+
+    if let Err(e) = File::create(path) {
+        eprintln!("Failed to create file {:?}: {e}", path) 
+    }
+}
+
+fn write_to_file(path: &Path, content: &str) -> Result<(), Error> {
+    let mut file: File = File::create(path)?;
+    file.write_all(content.as_bytes())?;
+    Ok(())
+}
+
+fn create_crux_workspace(input: &str) {
+    // creates a crux workspace at destination_path inputted
+    // check for errors using has_error, if true then exit
+    // else continues to init crux workspace by steps:
+    // 1. main.cpp
+    // 2. tests/
+    // 3. expected_results/
+    // 4. test_results/
+    // 5. logs/
+
+    let destination_path: PathBuf = PathBuf::from(input);
+    if has_error(&destination_path) { exit(1) }
+    
+    create_dir(&destination_path);
+    
+    let main_path: PathBuf = destination_path.join("main.cpp");
+    create_file(&main_path);
+    
+    let tests_path: PathBuf = destination_path.join("tests/");
+    create_dir(&tests_path);
+
+    let expected_results_path = destination_path.join("expected_results/");
+    create_dir(&expected_results_path);
+
+    let test_results_path = destination_path.join("test_results/");
+    create_dir(&test_results_path);
+    
+    let logs_path = destination_path.join("logs/");
+    create_dir(&logs_path);
+} 
