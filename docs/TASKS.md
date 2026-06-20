@@ -7,8 +7,8 @@ Tasks marker with <details/> block for every task day
 <details>
   <summary>Jun 20, 2026</summary>
   
-- [ ] `crux create`: scaffold folders and blank files
-- [ ] `crux create`: write `main.cpp` boilerplate (`#include <bits/stdc++.h>`, empty `main()`)
+- [x] `crux create`: scaffold folders and blank files
+- [x] `crux create`: write `main.cpp` boilerplate (`#include <bits/stdc++.h>`, empty `main()`)
 
 </details>
 
