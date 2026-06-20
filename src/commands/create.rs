@@ -77,10 +77,22 @@ fn create_file(path: &Path) {
     }
 }
 
-fn write_to_file(path: &Path, content: &str) -> Result<(), Error> {
-    let mut file: File = File::create(path)?;
-    file.write_all(content.as_bytes())?;
-    Ok(())
+fn write_to_file(path: &Path, content: &str) { 
+    // access file at path
+    // if encounters error, log and exit the process (stop the CLI immediately)
+
+    let mut file: File = match File::create(path) {
+        Ok(f) => f,
+        Err(e) => {
+            eprintln!("Failed to create or access file {:?}: {e}", path);
+            exit(1);
+        }
+    };
+
+    if let Err(e) = file.write_all(content.as_bytes()) {
+        eprintln!("Failed to write to file {:?}, {e}", path);
+        exit(1);
+    }
 }
 
 fn create_crux_workspace(input: &str) {
