@@ -93,6 +93,20 @@ fn write_to_file(path: &Path, content: &str) {
         eprintln!("Failed to write to file {:?}, {e}", path);
         exit(1);
     }
+} 
+
+fn write_main_boilerplate(main_path: &Path) {
+    // define the main_content for writing main boilerplate
+    // then call to function write_to_file to write main boilerplate
+
+    let main_content: &str = r#"#include <bits/stdc++.h>
+    
+int main() {
+
+}
+"#;
+
+    write_to_file(main_path, main_content);
 }
 
 fn create_crux_workspace(input: &str) {
@@ -104,6 +118,7 @@ fn create_crux_workspace(input: &str) {
     // 3. expected_results/
     // 4. test_results/
     // 5. logs/
+    // write main boilerplate
 
     let destination_path: PathBuf = PathBuf::from(input);
     if has_error(&destination_path) { exit(1) }
@@ -124,4 +139,6 @@ fn create_crux_workspace(input: &str) {
     
     let logs_path = destination_path.join("logs/");
     create_dir(&logs_path);
+
+    write_main_boilerplate(&main_path);
 } 
