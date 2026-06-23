@@ -1,7 +1,6 @@
 use std::fs;
 use std::fs::File;
 use std::path::{Path, PathBuf};
-use std::io::Error;
 use std::io::Write;
 use std::process::exit;
 
@@ -127,6 +126,9 @@ fn create_crux_workspace(input: &str) {
     
     let main_path: PathBuf = destination_path.join("main.cpp");
     create_file(&main_path);
+
+    let marker_path: PathBuf = destination_path.join(".crux");
+    create_file(&marker_path);
     
     let tests_path: PathBuf = destination_path.join("tests/");
     create_dir(&tests_path);
