@@ -10,6 +10,7 @@ Crux is a single Rust binary (`crux`) with no framework. Argument parsing is man
 src/
 ├── main.rs          — entry point; dispatches on argv[1]
 ├── commands.rs      — re-exports command submodules
+├── workspace.rs     — shared filesystem helpers
 └── commands/
     ├── create.rs    — crux create
     ├── add_test.rs  — crux add-test
@@ -30,7 +31,17 @@ Each command module exports one public function:
 pub fn run(args: &[String])
 ```
 
-Internal helpers are private to the module. `create.rs` is the most complete example: it validates input via `has_error()`, then delegates to `create_crux_workspace()`, which calls small focused helpers (`create_dir`, `create_file`, `write_to_file`).
+Internal helpers are private to the module. Commands import shared filesystem utilities from `crate::workspace`.
+
+## Shared filesystem helpers (`workspace.rs`)
+
+Filesystem operations used across commands live in `src/workspace.rs`:
+
+| Function | Description |
+|----------|-------------|
+| `create_dir(path)` | Creates a directory; exits on error |
+| `create_file(path)` | Creates an empty file; exits on error |
+| `write_file(path, content)` | Creates/truncates a file and writes content; exits on error |
 
 ## Error handling
 
@@ -61,7 +72,7 @@ A crux workspace is a directory identified by the presence of a `.crux` marker f
 | Command | Status |
 |---------|--------|
 | `create` | Complete |
-| `add-test` | Stub |
+| `add-test` | Complete |
 | `remove-test` | Stub |
 | `update-test` | Stub |
 | `run` | Stub |
