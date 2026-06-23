@@ -1,12 +1,11 @@
 use edit;
 use std::process::exit;
 use std::path::{Path, PathBuf};
-use crate::workspace::{create_file, write_file};
+use crate::workspace::{write_file};
 
 pub fn run(args: &[String]) {
     match args {
         [input] => {
-            println!("Ready to add test to crux workspace {input}");
             add_test_to_crux_workspace(input);
         }
         _ => {
@@ -57,17 +56,67 @@ fn get_test_number(path: &Path) -> i8 {
     return n
 }
 
-fn open_editor_input(path: &Path, test_number: i8) {
-    // opens $EDITOR for typing test input
-    // template: type your input...
-    // store what user writes in the editor
-    // create test_number.in
-    // write to test_number.in
+fn add_input_file(path: &Path, test_number: i8) {
+    // creates input file with user input content
+    // 1. opens $EDITOR for typing test input
+    //  - template: type your input...
+    // 2. store what user writes in the editor as input
+    //  - if leave blank (input.trim() == ""): log error and exit
+    // 3. create & write to test_number.in
     
-    let test_path = path.join(format!("tests/{test_number}.in"));
-   
+    let test_input_path = path.join(format!("tests/{test_number}.in"));
     
-    create_file(&test_path); 
+    let template: &str = "type your input...";
+
+    let input = match edit::edit(template) {
+        Ok(text) => text,
+        Err(e) => {
+            eprintln!("Couldn't save input: {e}");
+            exit(1);
+        }
+    };
+
+    if input.trim().is_empty() {
+        eprintln!("Error: cannot leave input blank");
+        exit(1);
+    }
+
+    write_file(&test_input_path, &input);
+} 
+
+fn add_output_file(path: &Path, test_number: i8) {
+    // add output file to a test by open editor and save to test_number.out
+    // 1. open $EDITOR for typing test output
+    //  - template: type expected results...
+    // 2. store what user type in the editor as input
+    //  - if input is empty: 
+    //      - warn user with:
+    //          "Warning: no expected output saved for test {N}.
+    //          crux run will log output without comparison."
+    //      - exit  
+    // 3. create & write to test_number.out
+
+    let test_output_path = path.join(format!("expected_results/{test_number}.out"));
+    
+    let template: &str = "type expected results...";
+
+    let input = match edit::edit(template) {
+        Ok(text) => text,
+        Err(e) => {
+            eprintln!("Couldn't save expected output: {e}");
+            exit(1);
+        }
+    };
+    
+    if input.trim().is_empty() {
+        let warning_log = r#"Warning: no expected output saved for test {N}.
+crux run will log output without comparison."#;
+
+        println!("{warning_log}");
+        exit(0);
+    }
+    
+    write_file(&test_output_path, &input);
 }
 
 fn add_test_to_crux_workspace(input: &str) {
@@ -83,5 +132,7 @@ fn add_test_to_crux_workspace(input: &str) {
 
     let test_number = get_test_number(&path);
 
-    open_editor_input(&path, test_number);
+    add_input_file(&path, test_number);
+    
+    add_output_file(&path, test_number);
 }
