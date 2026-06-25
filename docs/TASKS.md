@@ -7,7 +7,7 @@ Tasks marker with <details/> block for every task day
 <details>
   <summary>Jun 25, 2026</summary>
 
-- [ ] `crux remove-test`: delete `tests/N.in`, `expected_results/N.out`, `test_results/N.out`
+- [x] `crux remove-test`: delete `tests/N.in`, `expected_results/N.out`, `test_results/N.out`
 
 </details>
 
