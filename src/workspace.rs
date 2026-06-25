@@ -24,6 +24,16 @@ pub fn check_crux_workspace(path: &Path) {
     }
 }
 
+pub fn delete_file(path: &Path) { 
+    // delete a file using fs::remove_file 
+    // when encounters error, log error and exit
+
+    if let Err(e) = fs::remove_file(path) {
+        eprintln!("Error deleting file {:?}: {e}", path);
+        exit(1);
+    }
+}
+
 pub fn create_dir(path: &Path) {  
     // creates directory at path
     // if encounters error, log and exit the process (stop the CLI immediately)
