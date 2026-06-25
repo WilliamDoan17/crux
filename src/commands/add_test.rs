@@ -16,7 +16,7 @@ pub fn run(args: &[String]) {
 }
 
 
-fn get_test_number(path: &Path) -> i8 {
+fn get_test_number(path: &Path) -> i16 {
     // gets the test number for inputting test case
     // operation:
     // - implement a linear search on tests/ folder for the first N that N.in doesn't exist
@@ -24,9 +24,9 @@ fn get_test_number(path: &Path) -> i8 {
 
     let test_folder_path = path.join("tests/");
 
-    let mut n: i8 = 1; 
+    let mut n: i16 = 1; 
 
-    let is_test_number_exists = |n: i8| {
+    let is_test_number_exists = |n: i16| {
         let test_path = test_folder_path.join(format!("{n}.in"));
         test_path.is_file()
     }; 
@@ -38,7 +38,7 @@ fn get_test_number(path: &Path) -> i8 {
     n
 }
 
-fn add_input_file(path: &Path, test_number: i8) {
+fn add_input_file(path: &Path, test_number: i16) {
     // creates input file with user input content
     // 1. opens $EDITOR for typing test input
     //  - template: type your input...
@@ -66,7 +66,7 @@ fn add_input_file(path: &Path, test_number: i8) {
     write_file(&test_input_path, &input);
 } 
 
-fn add_output_file(path: &Path, test_number: i8) {
+fn add_output_file(path: &Path, test_number: i16) {
     // add output file to a test by open editor and save to test_number.out
     // 1. open $EDITOR for typing test output
     //  - template: type expected results...
