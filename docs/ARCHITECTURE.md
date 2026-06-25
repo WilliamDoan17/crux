@@ -61,6 +61,8 @@ A crux workspace is a directory identified by the presence of a `.crux` marker f
 └── logs/              — timestamped run logs
 ```
 
+Test numbers (`N`) are `i16`, supporting up to 32,767 test cases per workspace.
+
 ## Dependencies
 
 | Crate | Use |

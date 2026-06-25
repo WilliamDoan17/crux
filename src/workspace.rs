@@ -38,7 +38,7 @@ pub fn create_dir(path: &Path) {
     // creates directory at path
     // if encounters error, log and exit the process (stop the CLI immediately)
 
-    if let Err(e) = fs::create_dir(&path) {
+    if let Err(e) = fs::create_dir(path) {
         eprintln!("Failed to create directory {:?}: {e}", path);
         exit(1);
     } 

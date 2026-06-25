@@ -58,12 +58,9 @@ fn check_test_exists(path: &Path, test_number: i16) {
     // else: continue (return void)
     let test_path = path.join(format!("tests/{test_number}.in"));
 
-    match test_path.exists() {
-        false => {
-            eprintln!("Couldn't find test number {test_number}");
-            exit(1);
-        }
-        true => {}
+    if !test_path.exists() {
+        eprintln!("Couldn't find test number {test_number}");
+        exit(1);
     }
 }
 

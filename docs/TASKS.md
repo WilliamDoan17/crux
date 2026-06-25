@@ -5,6 +5,13 @@ Tasks marker with <details/> block for every task day
 ---
 
 <details>
+  <summary>Jun 25, 2026</summary>
+
+- [ ] `crux remove-test`: delete `tests/N.in`, `expected_results/N.out`, `test_results/N.out`
+
+</details>
+
+<details>
   <summary>Jun 23, 2026</summary>
 
 - [x] `crux add-test`: open `$EDITOR` (fallback to nano) for input, then expected output

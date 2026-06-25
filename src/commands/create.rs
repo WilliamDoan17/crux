@@ -61,7 +61,7 @@ fn has_error(destination_path: &Path) -> bool {
         return true
     }
 
-    return false
+    false
 }
 
 fn write_main_boilerplate(main_path: &Path) {
