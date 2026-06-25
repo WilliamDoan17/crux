@@ -30,7 +30,8 @@ fn check_crux_workspace(path: &Path) {
     // path is not a crux folder 
     let marker_path = path.join(".crux");
     if !marker_path.exists() {
-        eprintln!("Invalid path: not a crux workspace folder");
+        eprintln!("Invalid path: not a crux workspace folder"); 
+        exit(1);
     }
 }
 
@@ -46,14 +47,14 @@ fn get_test_number(path: &Path) -> i8 {
 
     let is_test_number_exists = |n: i8| {
         let test_path = test_folder_path.join(format!("{n}.in"));
-        return test_path.is_file()
+        test_path.is_file()
     }; 
     
     while is_test_number_exists(n) {
         n += 1;
     }
 
-    return n
+    n
 }
 
 fn add_input_file(path: &Path, test_number: i8) {
@@ -109,8 +110,8 @@ fn add_output_file(path: &Path, test_number: i8) {
     };
     
     if input.trim().is_empty() {
-        let warning_log = r#"Warning: no expected output saved for test {N}.
-crux run will log output without comparison."#;
+        let warning_log = format!(r#"Warning: no expected output saved for test {test_number}.
+crux run will log output without comparison."#);
 
         println!("{warning_log}");
         exit(0);
