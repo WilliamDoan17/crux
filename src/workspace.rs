@@ -4,11 +4,41 @@ use std::path::Path;
 use std::io::Write;
 use std::process::exit;
 
+pub fn check_crux_workspace(path: &Path) {
+    // check path to see if it is a crux workspace
+    // cases:
+    // 1. path not found as a directory
+    // 2. path is not a crux folder
+   
+    // path not found as a directory
+    if !path.is_dir() {
+        eprintln!("Invalid path: no directory found");
+        exit(1);
+    }
+
+    // path is not a crux folder 
+    let marker_path = path.join(".crux");
+    if !marker_path.exists() {
+        eprintln!("Invalid path: not a crux workspace folder"); 
+        exit(1);
+    }
+}
+
+pub fn delete_file(path: &Path) { 
+    // delete a file using fs::remove_file 
+    // when encounters error, log error and exit
+
+    if let Err(e) = fs::remove_file(path) {
+        eprintln!("Error deleting file {:?}: {e}", path);
+        exit(1);
+    }
+}
+
 pub fn create_dir(path: &Path) {  
     // creates directory at path
     // if encounters error, log and exit the process (stop the CLI immediately)
 
-    if let Err(e) = fs::create_dir(&path) {
+    if let Err(e) = fs::create_dir(path) {
         eprintln!("Failed to create directory {:?}: {e}", path);
         exit(1);
     } 
