@@ -17,7 +17,7 @@ pub fn run(args: &[String]) {
         },
         _ => {
             eprintln!("Usage: crux remove-test <name|path> <num>");
-            std::process::exit(1);
+            exit(1);
         }
     };
 }
