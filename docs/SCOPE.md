@@ -10,7 +10,8 @@ Users can:
 
 What the package does:
 
-- Scaffolds a problem folder with a static `main.cpp` boilerplate and `solution.cpp`
+- Scaffolds a problem folder with a static `main.cpp` boilerplate and a `.crux` marker file
+- Creates a `.crux` marker file in the workspace root to identify it as a crux-managed folder
 - Creates and manages test input/output files
 - Compiles and runs the solution against test cases
 - Writes logs at each run:

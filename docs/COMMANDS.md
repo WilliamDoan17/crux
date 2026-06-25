@@ -6,6 +6,7 @@ Scaffolds a new problem workspace.
 
 ```
 two-sum/
+├── .crux
 ├── main.cpp
 ├── tests/
 ├── expected_results/
@@ -13,6 +14,7 @@ two-sum/
 └── logs/
 ```
 
+- `.crux` — empty marker file that identifies the folder as a crux-managed workspace
 - `main.cpp` — boilerplate with `#include <bits/stdc++.h>` and an empty `main()`; user writes everything here
 - Directories are created empty; test files are added via `crux add-test`
 

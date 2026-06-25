@@ -5,6 +5,13 @@ Tasks marker with <details/> block for every task day
 ---
 
 <details>
+  <summary>Jun 23, 2026</summary>
+
+- [x] `crux add-test`: open `$EDITOR` (fallback to nano) for input, then expected output
+
+</details>
+
+<details>
   <summary>Jun 20, 2026</summary>
   
 - [x] `crux create`: scaffold folders and blank files
