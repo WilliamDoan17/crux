@@ -1,7 +1,7 @@
 use edit;
 use std::process::exit;
 use std::path::{Path, PathBuf};
-use crate::workspace::{write_file};
+use crate::workspace::{write_file, check_crux_workspace};
 
 pub fn run(args: &[String]) {
     match args {
@@ -15,25 +15,6 @@ pub fn run(args: &[String]) {
     }
 }
 
-fn check_crux_workspace(path: &Path) {
-    // check path to see if it is a crux workspace
-    // cases:
-    // 1. path not found as a directory
-    // 2. path is not a crux folder
-   
-    // path not found as a directory
-    if !path.is_dir() {
-        eprintln!("Invalid path: no directory found");
-        exit(1);
-    }
-
-    // path is not a crux folder 
-    let marker_path = path.join(".crux");
-    if !marker_path.exists() {
-        eprintln!("Invalid path: not a crux workspace folder"); 
-        exit(1);
-    }
-}
 
 fn get_test_number(path: &Path) -> i8 {
     // gets the test number for inputting test case
