@@ -1,8 +1,9 @@
 use std::process::exit;
-use crate::workspace::{check_crux_workspace};
+use crate::workspace::{check_crux_workspace, write_file};
 use std::path::{PathBuf, Path};
-use std::process::Command;
-use std::fs;
+use std::process::{Command, Stdio};
+use std::fs; 
+use std::fs::File;
 
 pub fn run(args: &[String]) {
     match args {
@@ -30,6 +31,12 @@ fn run_crux(input: &str) {
     check_crux_workspace(&path);
     
     compile_solution(&path);
+    
+    let test_numbers: Vec<i16> = get_test_numbers(&path);
+
+    for n in test_numbers {
+        run_test(&path, n);
+    }
 
 }
 
@@ -126,7 +133,54 @@ fn get_test_numbers(path: &Path) -> Vec<i16> {
     test_numbers
 }
 
-fn run_test(crux_path: &Path, test_path: &Path) {
+fn run_test(path: &Path, n: i16) {
     // run_test: run execution binary for test file and log output to test_results/ 
     // use stdin/stdout redirection to run execution binary
+    //
+    // open the test_file to get ready for binding stdin
+    // get output from running the binary:
+    //  if error running command:
+    //      log error then return
+    //  if runtime error:
+    //      - log:
+    //      Error
+    //      "error message"
+    //      to N.out
+    //      return
+    //  else:
+    //      write output to N.out and return
+
+    let test_path = path.join(format!("tests/{n}.in"));
+
+    let test_file = match File::open(&test_path) {
+        Ok(f) => f,
+        Err(e) => {
+            eprintln!("Error opening test file at {:?}: {e}", test_path);
+            return
+        }
+    }; 
+
+    let result_path = path.join(format!("test_results/{n}.out"));
+
+    let bin_path = path.join("bin/solution");
+
+    match Command::new(&bin_path)
+        .stdin(Stdio::from(test_file))
+        .output() 
+    {
+        Err(e) => {
+            eprintln!("Error running solution binary for test {n}: {e}");
+            return;
+        }
+        Ok(out) => {
+            if !out.stderr.is_empty() {
+                let error = String::from_utf8_lossy(&out.stderr);
+                write_file(&result_path, &format!("Error:\n{error}"));
+            } else {
+                let output = String::from_utf8_lossy(&out.stdout);
+                write_file(&result_path, &output);
+            }
+        }
+    }
+        
 }
