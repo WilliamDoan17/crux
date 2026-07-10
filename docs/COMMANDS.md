@@ -30,7 +30,7 @@ Interactively adds a new test case to crux workspace name|path specified.
 - input and output uses `$EDITOR`, with a fallback to nano to write
 - Input is written to `<name|path>/tests/N.in`
 - Expected output (if provided) is written to `<name|path>/expected_results/N.out`
-- Test number `N` is the next available integer (zero-padded, e.g. `01`, `02`)
+- Test number `N` is the next available integer, unpadded (e.g. `1`, `2`, ..., `10`)
 - If no expected output is given, the test still runs but is not diffed
 
 ---
@@ -66,20 +66,33 @@ For each test:
 - Writes actual output to `test_results/N.out`
 - If `expected_results/N.out` exists: diffs and reports PASS or FAIL
 - If no expected output: reports RUN (output written, not diffed)
+- If the solution binary fails to launch, or exits having written to stderr: reports ERROR
+
+If the solution binary fails to launch, or exits having written to stderr, the failure is written to `test_results/N.out` as:
+
+```
+Error:
+<error message>
+```
+
+instead of the solution's stdout, so it's distinguishable from legitimate program output.
 
 Output format:
 
 ```
-[PASS] test 01  (12ms)
-[FAIL] test 02  (8ms)
+[PASS]  test 1  (12ms)
+[FAIL]  test 2  (8ms)
   --- expected
   +++ actual
   @@ -1 +1 @@
   -42
   +41
-[RUN]  test 03  (5ms)
+[RUN]   test 3  (5ms)
+[ERROR] test 4  (3ms)
+  Error:
+  <error message>
 
-2/3 tests passed
+2/4 tests passed
 ```
 
 Writes a timestamped log to `logs/` with the full run output.
