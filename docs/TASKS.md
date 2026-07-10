@@ -5,6 +5,15 @@ Tasks marker with <details/> block for every task day
 ---
 
 <details>
+  <summary>Jun 09, 2026</summary>
+
+- [x] `crux create`: create `bin/` folder
+- [ ] `crux create`: change function architecture
+- [ ] `crux run`: compile `main.cpp` into `bin/solution`
+
+</details>
+
+<details>
   <summary>Jun 25, 2026</summary>
 
 - [x] `crux remove-test`: delete `tests/N.in`, `expected_results/N.out`, `test_results/N.out`
