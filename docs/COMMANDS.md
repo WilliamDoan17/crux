@@ -58,7 +58,7 @@ Interactively updates an existing test case.
 
 Compiles and runs the solution against all test cases.
 
-Compile: `g++ -std=c++17 -O2 -o <name>/bin/solution <name>/main.cpp`
+Compile: `g++ -std=c++17 -O2 -Wall -o <name>/bin/solution <name>/main.cpp`
 
 For each test:
 
