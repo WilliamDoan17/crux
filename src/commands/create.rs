@@ -14,25 +14,25 @@ pub fn run(args: &[String]) {
     };
 }
 
-fn has_error(destination_path: &Path) -> bool {
+fn check_error(destination_path: &Path) {
     // handle using blank file path to create crux_workspace
     let is_blank = destination_path.as_os_str().is_empty();
     if is_blank {
         eprintln!("Invalid path: blank path");
-        return true
+        exit(1);
     }
 
     // handle using file path to create crux_workspace
     if destination_path.is_file() {
         eprintln!("Invalid path: cannot use file path to create crux workspace");
-        return true
+        exit(1);
     }
 
     let parent_path: &Path = match destination_path.parent() {
         None => {
             // handle creating crux_workspace at root
             eprintln!("Invalid path: using root or . or .. to create crux workspace");
-            return true
+            exit(1);
         },
         Some(n) => n
     };
@@ -51,17 +51,16 @@ fn has_error(destination_path: &Path) -> bool {
 
     if !is_parent_exists {
         eprintln!("Cannot create crux workspace {:?} at parent directory {:?}: No such parent directory", workspace_name, parent_path);
-        return true
+        exit(1);
     }
     
     //handle input destination_path not empty
     let is_empty: bool = destination_path.read_dir().map_or(true, |mut entries| entries.next().is_none());
     if !is_empty {
         eprintln!("Destination path {:?} already exists and is not an empty directory", destination_path);
-        return true
+        exit(1);
     }
 
-    false
 }
 
 fn write_main_boilerplate(main_path: &Path) {
@@ -90,7 +89,8 @@ fn create_crux_workspace(input: &str) {
     // write main boilerplate
 
     let destination_path: PathBuf = PathBuf::from(input);
-    if has_error(&destination_path) { exit(1) }
+
+    check_error(&destination_path);
     
     create_dir(&destination_path);
     
@@ -111,6 +111,9 @@ fn create_crux_workspace(input: &str) {
     
     let logs_path = destination_path.join("logs/");
     create_dir(&logs_path);
+
+    let bin_path = destination_path.join("bin/");
+    create_dir(&bin_path);
 
     write_main_boilerplate(&main_path);
 } 
