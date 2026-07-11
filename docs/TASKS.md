@@ -5,11 +5,27 @@ Tasks marker with <details/> block for every task day
 ---
 
 <details>
+  <summary>Jun 11, 2026</summary>
+
+- [ ] `crux run`: diff `test_results/N.out` against `expected_results/N.out` where available
+- [ ] `crux run`: print formatted results (PASS / FAIL / RUN)
+- [ ] `crux run`: write timestamped log to `logs/`
+
+</details>
+
+<details>
+  <summary>Jun 10, 2026</summary>
+
+- [x] `crux run`: compile `main.cpp` into `bin/solution`
+- [x] `crux run`: execute binary for each test via stdin/stdout redirection
+
+</details>
+
+<details>
   <summary>Jun 09, 2026</summary>
 
 - [x] `crux create`: create `bin/` folder
-- [ ] `crux create`: change function architecture
-- [ ] `crux run`: compile `main.cpp` into `bin/solution`
+- [x] `crux create`: change function architecture
 
 </details>
 
@@ -29,7 +45,7 @@ Tasks marker with <details/> block for every task day
 
 <details>
   <summary>Jun 20, 2026</summary>
-  
+
 - [x] `crux create`: scaffold folders and blank files
 - [x] `crux create`: write `main.cpp` boilerplate (`#include <bits/stdc++.h>`, empty `main()`)
 
