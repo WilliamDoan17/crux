@@ -5,10 +5,19 @@ Tasks marker with <details/> block for every task day
 ---
 
 <details>
+  <summary>Jul 14</summary>
+
+- [ ] `crux update-test`: open `$EDITOR` for input and/or expected output, blank keeps existing
+  - [ ] update n.in file
+  - [ ] update n.out file
+
+</details>
+
+<details>
   <summary>Jul 13</summary>
 
-- [ ] `crux run`: summary line showing how many test passed
-- [ ] `crux run`: format log to match current docs
+- [x] `crux run`: summary line showing how many test passed
+- [x] `crux run`: format log to match current docs
 
 </details>
 
