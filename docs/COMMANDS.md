@@ -52,10 +52,16 @@ Interactively updates an existing test case.
 - Errors if `tests/N.in` doesn't exist for the given `<num>`
 - Opens `$EDITOR` pre-filled with the current input (`tests/N.in`), then the current
   expected output (`expected_results/N.out`) — no y/n prompt gating either step
-- If `expected_results/N.out` doesn't exist yet, the output editor opens with the same
-  blank template as `crux add-test` (`type expected results...`) instead of existing content
-- Saving a file blank (or unchanged from the template) keeps the existing value and makes
-  no change to it:
+- Before each editor launches, prints which file is about to be opened, then pauses ~1s
+  before invoking `$EDITOR` so the message isn't immediately wiped by the editor clearing
+  the screen:
+  - `Opening editor for input (tests/N.in)...`
+  - `Opening editor for expected output (expected_results/N.out)...`
+- If `expected_results/N.out` doesn't exist yet, the output editor opens with a blank
+  buffer containing only the comment placeholder `// type expected results...` instead of
+  real content, so it reads as an instruction rather than literal expected output
+- Saving a file blank (or unchanged from the placeholder/template) keeps the existing value
+  and makes no change to it:
   - for input, prints a "no changes made" notice
   - for expected output that already existed, prints the same "no changes made" notice
   - for expected output that didn't exist, prints the `add-test` "no expected output
