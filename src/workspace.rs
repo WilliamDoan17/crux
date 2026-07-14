@@ -71,7 +71,23 @@ pub fn write_file(path: &Path, content: &str) {
     if let Err(e) = file.write_all(content.as_bytes()) {
         eprintln!("Failed to write to file {:?}, {e}", path);
         exit(1);
-    }
-} 
+    } 
+}
+
+pub fn readlines(path: &Path) -> Vec<String> {
+    // read from a file and return a Vec containing string of lines
+    
+    let content = match fs::read_to_string(path) {
+        Ok(content) => content,
+        Err(e) => {
+            eprintln!("Error reading file at {:?}: {e}", path);
+            exit(1)
+        }
+    };
+
+    let lines: Vec<String> = content.lines().map(String::from).collect();
+    
+    lines
+}
 
 
