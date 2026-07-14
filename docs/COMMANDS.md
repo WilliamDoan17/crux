@@ -66,33 +66,38 @@ For each test:
 - Writes actual output to `test_results/N.out`
 - If `expected_results/N.out` exists: diffs and reports PASS or FAIL
 - If no expected output: reports RUN (output written, not diffed)
-- If the solution binary fails to launch, or exits having written to stderr: reports ERROR
+- If the solution binary launches but exits having written to stderr: reports ERROR
+- If the test couldn't run at all (test input file missing/unreadable, or the solution binary couldn't be launched): reports ERROR with no elapsed time
 
-If the solution binary fails to launch, or exits having written to stderr, the failure is written to `test_results/N.out` as:
+If the solution binary launches but exits having written to stderr, the failure is written to `test_results/N.out` as:
 
 ```
 Error:
 <error message>
 ```
 
-instead of the solution's stdout, so it's distinguishable from legitimate program output.
+instead of the solution's stdout, so it's distinguishable from legitimate program output. This case has a measured elapsed time, since the binary did run.
+
+If the test couldn't run at all (e.g. `tests/N.in` is missing, or `bin/solution` failed to launch), no `test_results/N.out` is written and no elapsed time is recorded — this is reported as `(n/a)` instead of a millisecond count.
 
 Output format:
 
 ```
 [PASS]  test 1  (12ms)
 [FAIL]  test 2  (8ms)
-  --- expected
-  +++ actual
-  @@ -1 +1 @@
-  -42
-  +41
+--- expected
++++ result
+  1 -42
+  1 +41
 [RUN]   test 3  (5ms)
 [ERROR] test 4  (3ms)
   Error:
   <error message>
+[ERROR] test 5  (n/a)
 
 2/4 tests passed
 ```
 
-Writes a timestamped log to `logs/` with the full run output.
+For a FAIL, each differing line is reported as a `<line number> -<expected>` / `<line number> +<actual>` pair, one pair per differing line (1-indexed, no surrounding context). Since comparison is index-matched (no realignment for insertions/deletions), the line number is always the same for both sides of a pair.
+
+Writes a timestamped log to `logs/` with the full run output. Log filename format: `YYYY-MM-DD_HH-MM-SS.log` (e.g. `2026-07-11_14-30-05.log`).
