@@ -17,7 +17,7 @@
 - [x] `crux remove-test`: delete `tests/N.in`, `expected_results/N.out`, `test_results/N.out`
 - [x] `crux run`: compile `main.cpp` into `bin/solution` once
 - [x] `crux run`: execute binary for each test via stdin/stdout redirection
-- [ ] `crux run`: diff `test_results/N.out` against `expected_results/N.out` where available
-- [ ] `crux run`: print formatted results (PASS / FAIL / RUN)
-- [ ] `crux run`: write timestamped log to `logs/`
+- [x] `crux run`: diff `test_results/N.out` against `expected_results/N.out` where available
+- [x] `crux run`: print formatted results (PASS / FAIL / RUN)
+- [x] `crux run`: write timestamped log to `logs/`
 - [ ] `crux update-test`: open `$EDITOR` for input and/or expected output, blank keeps existing
