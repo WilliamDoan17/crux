@@ -82,4 +82,4 @@ Log files in `logs/` are named `YYYY-MM-DD_HH-MM-SS.log` (e.g. `2026-07-11_14-30
 | `add-test`    | Complete |
 | `remove-test` | Stub     |
 | `update-test` | Stub     |
-| `run`         | Stub     |
+| `run`         | Complete |
