@@ -90,4 +90,18 @@ pub fn readlines(path: &Path) -> Vec<String> {
     lines
 }
 
+pub fn read(path: &Path) -> String {
+    // read from a file and return a string containing the file content
+
+    let content = match fs::read_to_string(path) {
+        Ok(content) => content,
+        Err(e) => {
+            eprintln!("Error reading file at {:?}: {e}", path);
+            exit(1)
+        }
+    };
+
+    content
+}
+
 
