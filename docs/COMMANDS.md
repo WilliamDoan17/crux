@@ -49,8 +49,17 @@ Removes a test case by number.
 Interactively updates an existing test case.
 
 - Uses `$EDITOR` with a fallback to nano
-- Prompts to replace input and/or expected output
-- Leaving a prompt blank keeps the existing value
+- Errors if `tests/N.in` doesn't exist for the given `<num>`
+- Opens `$EDITOR` pre-filled with the current input (`tests/N.in`), then the current
+  expected output (`expected_results/N.out`) — no y/n prompt gating either step
+- If `expected_results/N.out` doesn't exist yet, the output editor opens with the same
+  blank template as `crux add-test` (`type expected results...`) instead of existing content
+- Saving a file blank (or unchanged from the template) keeps the existing value and makes
+  no change to it:
+  - for input, prints a "no changes made" notice
+  - for expected output that already existed, prints the same "no changes made" notice
+  - for expected output that didn't exist, prints the `add-test` "no expected output
+    saved, `crux run` will log without comparison" warning instead
 
 ---
 
