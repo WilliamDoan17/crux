@@ -247,7 +247,10 @@ fn log_results(path: &Path, test_numbers: &[i16], test_durations: &[Option<u128>
         };
         
         let result_path = path.join(format!("test_results/{n}.out"));
-        let result_lines: Vec<String> = readlines(&result_path);
+        let result_lines: Vec<String> = readlines(&result_path)
+            .into_iter()
+            .map(|line| line.trim().to_string())
+            .collect();
 
         if !result_lines.is_empty() && result_lines[0] == "Error:" {
             log_content.push_str(&format!("[ERROR] test {n}  ({test_duration}ms)\n"));
@@ -271,7 +274,10 @@ fn log_results(path: &Path, test_numbers: &[i16], test_durations: &[Option<u128>
             continue;
         }
 
-        let expected_lines = readlines(&expected_path);
+        let expected_lines: Vec<String> = readlines(&expected_path)
+            .into_iter()
+            .map(|line| line.trim().to_string())
+            .collect();
 
         let mut diff_lines: Vec<usize> = Vec::new();
         let mut curr_line: usize = 0;
